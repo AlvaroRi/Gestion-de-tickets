@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:,">
+</head>
+<body>
+    <header>
+        <div class="logo-placeholder">
+            <img src="" alt="">
+        </div>
+        <h1>Panel de Gestión de Sistemas</h1>
+    </header>
+    <div class="controles-header">
+    <button onclick="cerrarSesion()" class="btn-logout">
+        <span></span> Cerrar Sesión
+    </button>
+</div>
+
+<div class="dashboard-visuals" style="display: flex;  margin-top: 30px; flex-wrap: wrap;">
+    
+    <div class="chart-container" style="flex: 1; min-width: 300px; background: var(--bg-container); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+        <h3 style="text-align: center;">📊 Distribución de Estados</h3>
+        <canvas id="chartEstados"></canvas>
+    </div>
+
+    <div class="chart-container" style="flex: 1; min-width: 300px; background: var(--bg-container); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+        <h3 style="text-align: center;">💻 Tickets por Categoría</h3>
+        <canvas id="chartCategorias"></canvas>
+    </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

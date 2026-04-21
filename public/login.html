@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' http://ff.kes.v2.scr.kaspersky-labs.com ws://ff.kes.v2.scr.kaspersky-labs.com;">
+    <title>Acceso TI - Protectio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:,">
+</head>
+<body style="display:flex; align-items:center; justify-content:center; height:100vh; background:#e9e2e2;">
+    <div class="card" style="width: 350px; text-align: center; padding: 40px;">
+        <img src="" style="width: 180px; margin-bottom: 20px;">
+        <h2 style="margin-bottom: 20px; color: #333;">Panel de Control</h2>
+        
+        <input type="text" id="userInput" placeholder="Usuario de Sistemas">
+        <input type="password" id="passInput" placeholder="Contraseña">
+        
+        <button id="btnLogin" style="width: 100%; margin-top: 15px;">Entrar al Sistema</button>
+        <p id="errorMsg" style="color: #e74c3c; display: none; margin-top: 15px; font-weight: bold;">❌ Acceso Denegado</p>
+    </div>
+
+    <script>
+    document.getElementById('btnLogin').onclick = async () => {
+    const usuario = document.getElementById('userInput').value;
+    const password = document.getElementById('passInput').value;
+    const errorMsg = document.getElementById('errorMsg');
+
+    if(errorMsg) errorMsg.style.display = 'none';
+
+    try {
+        const res = await fetch('http://localhost:3000/api/login', {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify({ 
+                user: usuario,    
+                pass: password    
+            })
+        });
+
+
+        const contentType = res.headers.get("content-type");
+        if (contentType && contentType.indexOf("application/json") !== -1) {
+            
+            const data = await res.json();
+
+            if (res.ok && data.success) {
+                
+                localStorage.setItem('adminToken', data.token);
+                localStorage.setItem('userRole', data.role); 
+
+                if (data.role === 1) {
+                    window.location.replace("admin.html");     
+                } else if (data.role === 2) {
+                    window.location.replace("dashboard.html"); 
+                } else {
+                    window.location.replace("index.html");     
+                }
+                
+            } else {
+        
+                if(errorMsg) {
+                    errorMsg.innerText = "" + (data.mensaje || "Credenciales incorrectas");
+                    errorMsg.style.display = 'block';
+                } else {
+                    alert(data.mensaje || "Usuario o contraseña incorrectos");
+                }
+            }
+        } else {
+            console.error("El servidor no envió JSON. Envió:", await res.text());
+            alert("Error crítico en el servidor.");
+        }
+
+    } catch (error) {
+        console.error("Error en la conexión:", error);
+        alert("No se pudo conectar con el servidor. Verifica que esté encendido.");
+    }
+};
+
+    </script>
+</body>
+</html>

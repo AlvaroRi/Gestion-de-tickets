@@ -1,0 +1,342 @@
+:root {
+    --azul-marino: #15305d;
+    --blanco: #ffffff;
+    --bg-body: #f4f7f6;
+    --bg-container: #ffffff;
+    --text-main: #2f3542;
+    --text-secondary: #57606f;
+    --border-color: #dcdde1;
+    --card-bg: #ffffff; /* Color inicial claro */
+}
+
+[data-theme="dark"] {
+    --bg-body: #121212;
+    --bg-container: #1e1e1e;
+    --text-main: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --border-color: #333333;
+    --card-bg: #252525; /* Gris oscuro para las tarjetas */
+    --azul-marino: #1e3a8a; /* Un azul un poco más vibrante para que no se pierda */
+}
+
+/* --- Base --- */
+body { 
+    font-family: 'Segoe UI', sans-serif; 
+    background-color: var(--bg-body) !important; 
+    color: var(--text-main); 
+    margin: 0;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* --- Contenedor (Ahora más ancho como pediste) --- */
+.container { 
+    max-width: 1200px; /* Aumentado de 800px a 1200px */
+    width: 95%;
+    margin: 40px auto; 
+    padding: 20px; 
+    background-color: var(--bg-container) !important; 
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    min-height: 80vh;
+}
+.login-container {
+    max-width: 400px !important; /* Volvemos a un tamaño razonable para login */
+    margin: 100px auto;
+    min-height: auto !important; /* Quitamos el 80vh */
+}
+/* --- Header --- */
+header { 
+    background: #15305d !important; /* Azul marino fijo */
+    color: #ffffff !important;      /* Texto blanco fijo */
+    padding: 1.5rem; 
+    text-align: center; 
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.controles-header {
+    display: flex;
+    flex-wrap: wrap; /* Para que bajen si no caben */
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.search-container {
+    flex-grow: 1; /* El buscador toma el espacio sobrante */
+    min-width: 300px;
+}
+.solucion-container {
+    margin-top: 15px;
+    padding: 12px;
+    background-color: rgba(46, 213, 115, 0.1); /* Verde muy tenue */
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    color: var(--text-main) !important; /* Fuerza el color según el tema */
+}
+
+.solucion-container strong {
+    color: #2ecc71; /* Un verde que resalte en ambos modos */
+}
+
+.fecha-cierre {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 5px;
+}
+/* --- Tarjetas de Ticket (CORREGIDAS) --- */
+.ticket-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    
+    /* Crucial: Usar la variable y quitar el #ffffff fijo */
+    background-color: var(--card-bg) !important; 
+    color: var(--text-main) !important;
+    border: 1px solid var(--border-color);
+}
+
+/* --- Semáforo con Transparencia --- */
+.prioridad-alta { 
+    border-left: 10px solid #ff4757 !important; 
+    background-color: rgba(255, 71, 87, 0.08) !important; 
+}
+.prioridad-media { 
+    border-left: 10px solid #ffa502 !important; 
+    background-color: rgba(255, 165, 2, 0.08) !important;
+}
+.prioridad-baja { 
+    border-left: 10px solid #2ed573 !important; 
+    background-color: rgba(46, 213, 115, 0.08) !important;
+}
+
+/* --- Inputs y Botones --- */
+input, textarea, select { 
+    width: 100%; 
+    padding: 12px; 
+    margin: 10px 0;
+    box-sizing: border-box; /* 👈 ESTO EVITA QUE SE DESBORDE */
+    background-color: var(--card-bg); 
+    color: var(--text-main); 
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+}
+
+.btn-filter, .btn-filter-excel {
+    height: 45px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-filter { width: 150px; background: #e0e0e0; color: #333; }
+.btn-filter.active { background: var(--azul-marino); color: white; }
+.btn-filter-excel { width: 200px; background: #27ae60; color: white; margin-left: auto; }
+.modal-overlay {
+    display: none; /* Se controla por JS */
+    
+    position: fixed !important; /* !important asegura que ignore otros estilos */
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(0, 0, 0, 0.8) !important; /* Más oscuro para resaltar el modal */
+    backdrop-filter: blur(5px);
+    z-index: 99999 !important; /* Por encima de cualquier header o card */
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-atender, .btn-resolver, .btn-nota {
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Colores específicos */
+.btn-atender { 
+    background-color: #3498db; 
+    color: white; 
+}
+
+.btn-resolver { 
+    background-color: #2ecc71; 
+    color: white; 
+}
+
+.btn-nota {
+    background-color: var(--azul-marino);
+    color: white;
+    padding: 5px 10px;
+}
+
+/* Efectos */
+.btn-atender:hover, .btn-resolver:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.btn-atender:active, .btn-resolver:active {
+    transform: translateY(0);
+}
+
+/* Caja blanca del modal */
+.modal-content {
+    background-color: var(--bg-container) !important; /* Cambia con el tema */
+    color: var(--text-main) !important;               /* Texto adaptable */
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    position: relative;
+    margin: auto; /* Centrado extra */
+}
+.modal-content h3 {
+    color: var(--text-main);
+}
+
+.modal-content textarea, 
+.modal-content select {
+    background-color: var(--card-bg) !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--border-color) !important;
+}
+textarea#textoResolucion {
+    width: 100%;
+    padding: 10px;
+    margin: 15px 0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-family: inherit;
+    resize: none;
+}
+/* Contenedor principal que centra el login en la pantalla */
+.login-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: var(--bg-body);
+}
+
+/* La tarjeta del login */
+.login-card {
+    background-color: var(--bg-container);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+.login-card h2 {
+    margin-bottom: 25px;
+    color: var(--text-main);
+}
+
+/* Inputs específicos del login */
+.login-card input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--card-bg);
+    color: var(--text-main);
+    font-size: 1rem;
+}
+
+/* Botón de entrar */
+#btnLogin {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--azul-marino);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#btnLogin:hover {
+    filter: brightness(1.2);
+}
+
+/* Mensaje de error */
+#errorMsg {
+    color: #ff4757;
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+.btn-logout {
+    background-color: #e74c3c; /* Rojo elegante */
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    margin-left: auto; /* Lo empuja a la derecha si está en un flexbox */
+    margin-top: 30px;
+}
+
+.btn-logout:hover {
+    background-color: #c0392b;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+}
+
+/* Ajuste para el modo oscuro */
+[data-theme="dark"] .btn-logout {
+    background-color: #b33939;
+}
+.chart-container {
+    position: relative;
+    height: 55vh; /* O un valor fijo como 300px */
+    width: 100%;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+canvas {
+    width: 90% !important;
+    height: 90% !important;
+    margin: auto;
+}
+.modal-buttons { display: flex; justify-content: flex-end; gap: 10px; }
+
+.btn-guardar { background: #2ecc71; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; }
+.btn-cancelar { background: #95a5a6; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; }
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}

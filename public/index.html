@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Solicitud de Soporte TI</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:,">
+</head>
+<body>
+    <header>
+        <div class="logo-placeholder">
+            <img src="" alt="">
+        </div>
+        <h1>Centro de Soporte Técnico</h1>
+    </header>
+    <div class="controles-header">
+    <button onclick="cerrarSesion()" class="btn-logout">
+        <span></span> Cerrar Sesión
+    </button>
+</div>
+    <div class="container">
+        <div class="card">
+            <h2>Crear Nuevo Ticket</h2>
+            <p>Por favor, describe tu problema detalladamente para que nuestro equipo pueda ayudarte.</p>
+            
+            <form id="ticketForm">
+                <label for="usuario">Nombre Solicitante:</label>
+                <input type="text" id="usuario" placeholder="Ej. Juan Pérez" required>
+                
+                <label for="prioridad">Nivel de Urgencia:</label>
+                <select id="prioridad">
+                    <option value="Baja">Baja - Consulta o duda</option>
+                    <option value="Media">Media - Error que permite trabajar</option>
+                    <option value="Alta">Alta - Sistema detenido / Bloqueo</option>
+                </select>
+                <div class="form-group">
+                <label for="red">Ubicación / Red:</label>
+                <select id="red" required>
+                    <option value="" disabled selected>Seleccione su red...</option>
+                    <option value="Red-Administracion">Red 1: Administración</option>
+                    <option value="Red-Ventas">Red 2: Ventas / Showroom</option>
+                    <option value="Red-Almacen">Red 3: Almacén / Logística</option>
+                    <option value="Red-Planta">Red 4: Planta de Producción</option>
+                    <option value="Red-Sistemas">Red 5: Sistemas / Servidores</option>
+                </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="categoria"> Tipo de Problema:</label>
+                    <select id="categoria" required>
+                        <option value="" disabled selected>¿Qué sucede?</option>
+                        <option value="Hardware">Falla de Hardware (PC, Mouse, Monitor)</option>
+                        <option value="Software">Problema de Software (Office, ERP, Windows)</option>
+                        <option value="Red">Problemas de Red / Internet</option>
+                        <option value="Accesos">Accesos / Contraseñas / Correo</option>
+                        <option value="Otro">Otro (Especificar en descripción)</option>
+                    </select>
+                </div>
+                
+                <label for="descripcion">Descripción del Problema:</label>
+                <textarea id="descripcion" rows="4" placeholder="Describe qué sucede..." required></textarea>
+                
+                <button type="submit">Enviar Solicitud</button>
+            </form>
+
+            <div id="mensajeExito" style="display:none; color: #28a745; margin-top: 15px; font-weight: bold; text-align: center; border: 1px solid #28a745; padding: 10px; border-radius: 5px;">
+                 ¡Ticket enviado con éxito! Un técnico lo revisará pronto.
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
